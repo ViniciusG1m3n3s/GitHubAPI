@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">    <script src="index.js" async></script>
+    <title>Busca de Perfil - API GitHub</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container-header">
+            <form action="" class="search-form">
+            <input type="text" placeholder="Digite o nome do usuário" id="username_input">
+            <button type="submit" class="button">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="#9198a1" data-view-component="true" xmlns="http://www.w3.org/2000/svg"> 
+                <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+                </svg>
+            </button>
+            </form>
+        </div>
+        <div class="container-data hidden">
+                <div class="profile-data">
+                    <img src="https://unsplash.it/200" alt="" class="profile-image">
+                    <h1 class="profile-name">Nome</h1>
+                    <p class="profile-username">username</p>
+                    <div class="followers">
+                        <svg width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-person" fill="#9198a1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path>
+                        </svg>
+                        <span class="profile-followers">100</span>
+                        <span class="secondary-text">seguidores</span> 
+                    </div>
+                    <p class="profile-bio">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                    <ul>
+                        <li>
+                        <svg width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-person" fill="#9198a1" xmlns="http://www.w3.org/2000/svg">                    
+                        <path d="m12.596 11.596-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193 6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z"></path>
+                        </svg>
+                        <span class="profile-location">São Carlos, SP - Brazil</span>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#9198a1" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"></path>
+                            </svg>
+                            <span class="profile-email">email@example</span>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#9198a1" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path>
+                            </svg>
+                            <span class="profile-link">https://www.linkedin.com</span>
+                        </li>
+                    </ul>
+                    
+                </div>
+            
+            <div class="repo-data">
+                <!-- REPO 1-->
+                <div class="repo-info">
+                    <div class="header-repo">
+                        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" fill="#9198a1" xmlns="http://www.w3.org/2000/svg" class="repo-icon">
+                        <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                        </svg>
+                        <a class="repo-name" href="">
+                            streamlit-extras
+                        </a>
+                        <span class="repo-visibility">
+                            Public
+                        </span>
+                    </div>
+                        <p class="repo-description">
+                            Discover, try, install and share Streamlit re-usable bits we call "extras"!
+                        </p>
+                    <span class="repo-language">
+    
+                            Python
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
