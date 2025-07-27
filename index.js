@@ -2,40 +2,111 @@ const searchUser = document.querySelector('.search-form');
 
 const userRepoContent = document.querySelector('.repo-data');
 
-searchUser.addEventListener('submit', async (event) => {
-    //Previne o comportamento padrão do formulário
-    event.preventDefault()
-    //Reseta o conteúdo dos repositórios
-    resetForm()
-    //Seleciona o input de username e busca os dados do usuário
-    const username = event.target.querySelector('#username_input').value;
+// Adicione estas constantes no topo do arquivo
+const usernameInput = document.querySelector('#username_input');
+const suggestionList = document.querySelector('#suggestion-list');
+
+// Função de debounce para evitar múltiplas requisições
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Função para buscar sugestões
+async function fetchSuggestions(query) {
+    try {
+        const response = await fetch(`https://api.github.com/search/users?q=${query}&per_page=5`);
+        const data = await response.json();
+        return data.items || [];
+    } catch (error) {
+        console.error('Erro ao buscar sugestões:', error);
+        return [];
+    }
+}
+
+// Função para mostrar os resultados
+async function showResults(username) {
+    resetForm();
     const userData = await getUserData(username);
     const userRepo = await getUserRepo(username);
-    //Exibe os dados do usuário e os repositórios
     showUserData(userData, userRepo);
-    //Reseta o formulário
-    console.log(userData);
-    console.log(userRepo);
+    suggestionList.classList.add('hidden');
+}
+
+// Função para renderizar as sugestões
+function renderSuggestions(users) {
+    suggestionList.innerHTML = '';
+    
+    if (users.length === 0) {
+        suggestionList.classList.add('hidden');
+        return;
+    }
+
+    users.forEach(user => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <img src="${user.avatar_url}" alt="${user.login}" class="suggestion-avatar">
+            <span class="suggestion-username">${user.login}</span>
+        `;
+        
+        li.addEventListener('click', () => {
+            usernameInput.value = user.login;
+            showResults(user.login);
+        });
+        
+        suggestionList.appendChild(li);
+    });
+    
+    suggestionList.classList.remove('hidden');
+}
+
+// Handler do input com debounce
+const handleInput = debounce(async (e) => {
+    const query = e.target.value.trim();
+    
+    if (query.length < 3) {
+        suggestionList.classList.add('hidden');
+        return;
+    }
+    
+    const users = await fetchSuggestions(query);
+    renderSuggestions(users);
+}, 300);
+
+// Event Listeners
+usernameInput.addEventListener('input', handleInput);
+
+// Fechar sugestões quando clicar fora
+document.addEventListener('click', (e) => {
+    if (!suggestionList.contains(e.target) && e.target !== usernameInput) {
+        suggestionList.classList.add('hidden');
+    }
 });
 
+// Função para buscar dados do usuário na API do GitHub
 async function getUserData(username) {
-    //Busca os dados do usuário na API do GitHub
     const response = await fetch(`https://api.github.com/users/${username}`)
-    //Extrai os dados do usuário em formato JSON
     const data_profile = await response.json();
     return data_profile;
 }
 
+// Função para buscar repositórios do usuário na API do GitHub
 async function getUserRepo(username) {
     const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`)
     const data_profile_repo = await response.json();
     return data_profile_repo;
 }
 
+// Função para exibir os dados do usuário e repositórios na interface
 function showUserData(userData, userRepo) {
-    //Removendo a classe 'hidden' para exibir os dados do usuário
     document.querySelector('.container-data').classList.remove('hidden');
-    //Recolhendo os dados relevantes do usuário
     document.querySelector('.profile-image').src = userData.avatar_url;
     document.querySelector('.profile-image').alt = userData.name;
     document.querySelector('.profile-name').textContent = userData.name || userData.login;
@@ -46,7 +117,6 @@ function showUserData(userData, userRepo) {
     document.querySelector('.profile-email').textContent = userData.email || "E-mail não informado";
     document.querySelector('.profile-link').textContent = userData.blog || "Blog não informado";
 
-    //Criando a estrutura para exibir os repositórios do usuário
     userRepo.forEach(repo => {
         
         const userRepodiv = document.createElement('div')
@@ -101,3 +171,4 @@ function showUserData(userData, userRepo) {
             userRepoContent.removeChild(userRepoContent.firstChild);
         }
     }
+
